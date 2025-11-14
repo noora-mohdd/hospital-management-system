@@ -1,34 +1,7 @@
-html, body{ 
-    margin:0; 
-    padding: 0; 
-    height: 100%; 
-    width: 100%; 
-    background-color: #ace5f6; 
-} 
-#main{ 
-    text-align: center;
-    position: relative; 
-} 
-#main h1{ 
-    position: relative; 
-    top:17vh; 
-    margin: 0; 
-    font-family:"Times New Roman"; 
-    font-size: 50px; 
-} 
-#form-body h2{ 
-    text-align: center; 
-    margin-top: 25px; 
-} 
-#form-body form{ 
-    text-align: left; 
-    padding: 40px; 
-    margin-top: -15px; 
-    font-size: 20px; 
-} 
-.form-control{ 
-    width: 95%; 
-    padding: 5px; 
-    border: 1px solid gray; 
-    border-radius: 5px; 
+body{
+    background-color: #ace5f6;
+}
+
+.card{
+    border-radius: 16px;
 }
