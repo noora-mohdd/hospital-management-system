@@ -31,12 +31,38 @@
                 </thead>
                 <!--sample row until backend-->
                 <tbody>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td><button type="button" class="btn btn-primary">View</button></td>
+                    <td>101</td>
+                    <td>Mr. DUMFUKKS</td>
+                    <td><button type="button" class="btn btn-primary">Update</button>  </td>
+                    <td><button type="button" class="btn btn-outline-success">Mark as complete</button>
+                        <button type="button" class="btn btn-outline-danger">Cancel</button>
+                    </td>
                 </tbody>
             </table>
+        </div>
+
+        <!--assigned patients part-->
+        <div class="d-flex align-items-center justify-content-between mt-4">
+            <h5>Assigned Patients</h5>
+        </div>
+
+        <!--assigned patient list-->
+        <div class="card mt-3 p-2">
+
+         <!--patient row-->
+        <!--connect thru jinja later so we dontn have to hardcode and can go thru the docs admin registered from db-->
+            <div class="d-flex align-items-center justify-content-between mt-2" style="border: 2px solid black; border-radius: 6px; padding: 10px;">
+                <h6>Ms. DUMBFUKS</h6>
+                <div class="d-flex gap-2"> <!--gap gives space b/w buttons-->
+                    <button type="button" class="btn btn-outline-primary" href="#">View</button>  <!--patient edit form ig-->
+                </div>
+            </div>
+
+        </div>
+
+        <!--provide availability button-->
+        <div class="text-end mt-4">
+            <button type="button" class="btn btn-success">Provide availability</button>
         </div>
 
 
