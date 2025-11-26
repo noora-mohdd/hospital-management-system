@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Department details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/hospital mgmt sys/static/style.css">
+</head>
+<body class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4 shadow" style="width: 65rem; background-color: #e3fcf9">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3 class="fw-bold">department of something</h3> <!--replace w jinja later-->
+            <button class="btn btn-outline-primary" href="#">Back</button>
+        </div>
+
+        <p class="mb-4"> <!--make ts easier w jinja-->
+            this department provides specialized medical care, diagnostics and treatments for patients. 
+            a trained team of doctors and specialised medical staff ensure high quality care and support tailored to 
+            the specific needs of the department.
+        </p>
+
+        <!--doctors list part-->
+        <div class="d-flex align-items-center justify-content-between mt-4">
+            <h5>Doctors list</h5>
+        </div>
+        <div class="card mt-3 p-2">
+        <!--connect thru jinja later so we dontn have to hardcode and can go thru the docs admin registered from db-->
+            <div class="d-flex align-items-center justify-content-between mt-2" style="border: 2px solid black; border-radius: 6px; padding: 10px;">
+                <h6>Dr. BADABING</h6>
+                <div class="d-flex gap-2"> <!--gap gives space b/w buttons-->
+                    <button type="button" class="btn btn-outline-primary" href="#">check availability</button>
+                    <button type="button" class="btn btn-outline-primary" href="#">view details</button>  
+                </div>
+            </div>
+
+        </div>
+
+        
+    </div>
+
+</body>
+</html>
