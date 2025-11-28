@@ -1,60 +1,51 @@
 from backend.database import db
 
-#departments table
-class Departments(db.model):
-    id=db.column(db.Integer, primary_key=True)
-    name=db.column(db.String(100), unique=True, nullable=False)
-    description=db.column(db.Text)
-
-    doctors=db.relationship("Doctor",backref="department", lazy=True)
-
-
 
 #patient table
-class Patient(db.model):
-    id=db.column(db.Integer, primary_key=True)
-    full_name=db.column(db.String(100), nullable=False)
-    username=db.column(db.String(50), unique=True, nullable=False)
-    email=db.column(db.String(100), unique=True)
-    password=db.column(db.String(100), nullable=False)
-    age=db.column(db.Integer)
-    is_blacklisted= db.column(db.Boolean, default=False)
-    is_admin= db.column(db.Boolean, default=False)
+class Patient(db.Model):
+    id=db.Column(db.Integer, primary_key=True)
+    full_name=db.Column(db.String(100), nullable=False)
+    username=db.Column(db.String(50), unique=True, nullable=False)
+    email=db.Column(db.String(100), unique=True)
+    password=db.Column(db.String(100), nullable=False)
+    age=db.Column(db.Integer)
+    is_blacklisted= db.Column(db.Boolean, default=False)
+    is_admin= db.Column(db.Boolean, default=False)
 
     appointments=db.relationship("Appointment", backref="patient", lazy=True)
 
 #doctors table
-class Doctor(db.model):
-    id=db.column(db.Integer, primary_key=True)
-    full_name=db.column(db.String(100), nullable=False)
-    username=db.column(db.String(50), unique=True, nullable=False)
-    email=db.column(db.String(100), unique=True)
-    password=db.column(db.String(100), nullable=False)
-    specialization=db.column(db.String(100))
-    experience=db.column(db.Integer)
-    is_blacklisted=db.column(db.Boolean, default=False)
+class Doctor(db.Model):
+    id=db.Column(db.Integer, primary_key=True)
+    full_name=db.Column(db.String(100), nullable=False)
+    username=db.Column(db.String(50), unique=True, nullable=False)
+    email=db.Column(db.String(100), unique=True)
+    password=db.Column(db.String(100), nullable=False)
+    specialization=db.Column(db.String(100))
+    experience=db.Column(db.Integer)
+    is_blacklisted=db.Column(db.Boolean, default=False)
 
     appointments=db.relationship("Appointment", backref="doctor", lazy=True)
 
 #appointment table
-class Appointment(db.model):
-    id=db.column(db.Integer, primary_key=True)
-    patient_id=db.column(db.Integer, db.ForeignKey("patient.id"))
-    doctor_id=db.column(db.Integer, db.ForeignKey("doctor.id"))
-    date=db.column(db.String(20))
-    time=db.column(db.String(20))
-    status=db.column(db.String(20))
+class Appointment(db.Model):
+    id=db.Column(db.Integer, primary_key=True)
+    patient_id=db.Column(db.Integer, db.ForeignKey("patient.id"))
+    doctor_id=db.Column(db.Integer, db.ForeignKey("doctor.id"))
+    date=db.Column(db.String(20))
+    time=db.Column(db.String(20))
+    status=db.Column(db.String(20))
 
     history=db.relationship("History", backref="appointment", uselist=False)
 
 #history/treatment table
-class History(db.model):
-    id=db.column(db.Integer, primary_key=True)
+class History(db.Model):
+    id=db.Column(db.Integer, primary_key=True)
     
-    appointment_id=db.column(db.Integer, db.ForeignKey("appointment.id"), unique=True)
+    appointment_id=db.Column(db.Integer, db.ForeignKey("appointment.id"), unique=True)
 
-    visit_type=db.column(db.String(100))
-    test_done=db.column(db.String(100))
-    diagnosis=db.column(db.Text)
-    prescription=db.column(db.Text)
-    medicine=db.column(db.Text)
+    visit_type=db.Column(db.String(100))
+    test_done=db.Column(db.String(100))
+    diagnosis=db.Column(db.Text)
+    prescription=db.Column(db.Text)
+    medicine=db.Column(db.Text)
