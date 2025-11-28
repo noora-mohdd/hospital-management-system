@@ -5,25 +5,26 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-light" style="background-color: #faee5a;">
+    <nav class="navbar navbar-light" style="background-color: #073358;">
         <div class="container-fluid">
             <span class="navbar-brand mb-0 h1">MediCare</span>
             <div class="justify-content-end" id="navbarNav">
                 <ul class="navbar-nav flex-row">
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="#">Log In</a>
+                        <a class="nav-link px-3" href="{{url_for('patient.login')}}">Log In</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-3" href="#">Sign Up</a>
+                        <a class="nav-link px-3" href="{{url_for('patient.register')}}">Sign Up</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-    <!--Connect with jinja2 here, route from app.py the otherpages-->
-    <footer class="text-center" style="background-color: #E2DED2;">
-        <p>MediCare 2025 | All Rights Reserved</p> 
-    </footer>
+    
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
 </body>
 </html>
-<!--aaa-->
