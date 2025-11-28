@@ -48,4 +48,13 @@ class Appointment(db.model):
     history=db.relationship("History", backref="appointment", uselist=False)
 
 #history/treatment table
+class History(db.model):
+    id=db.column(db.Integer, primary_key=True)
+    
+    appointment_id=db.column(db.Integer, db.ForeignKey("appointment.id"), unique=True)
 
+    visit_type=db.column(db.String(100))
+    test_done=db.column(db.String(100))
+    diagnosis=db.column(db.Text)
+    prescription=db.column(db.Text)
+    medicine=db.column(db.Text)
