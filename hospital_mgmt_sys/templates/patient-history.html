@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="d-flex justify-content-center align-items-center vh-100">
+
+    <div class="card p-4 shadow" style="width: 65rem; background-color: #e3fcf9">
+        <h3 class="fw-bold mb-4">Patient history</h3>
+
+        <p><strong>patient name:</strong> {{ patient.full_name }} </p>
+        <p><strong>doctor name:</strong> {{ doctor.full_name }} </p>
+        <p><strong>department</strong> {{ doctor.specialization }} </p>
+
+        <div class="table-responsive mt-4">
+            <table class="table" style="border: 2px solid black; border-radius: 6px;">
+                <thead>
+                    <tr>
+                        <th>Visit No.</th>
+                        <th>Visit type</th>
+                        <th>test done</th>
+                        <th>Diagnosis</th>
+                        <th>prescription</th>
+                        <th>medicine</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in History %}
+                    <tr>
+                        <td>{{% loop.index %}} </td>
+                        <td>{{% item.visit_type %}} </td>
+                        <td>{{% item.test_done %}} </td>
+                        <td>{{% item.diagnosis %}} </td>
+                        <td>{{% item.prescription %}} </td>
+                        <td>{{% item.medicine %}} </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <button onclick="history.back()" class="btn btn-outline-primary mt-3">Back</button>
+
+
+
+
+    </div>
+
+    
+</body>
+</html>

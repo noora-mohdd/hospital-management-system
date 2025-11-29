@@ -12,18 +12,18 @@
 
     <div class="card p-4 shadow" style="width: 30rem; background-color: #e3fcf9">
         <h2 class="text-center mb-4">Add Doctor</h2>
-        <form action="#" method="post">
+        <form action="{{ url_for('admin.create_doctor')}}" method="post">
 
             <!--full name-->
              <div class="mb-3">
                 <label class="form-label">Full Name</label> <br>
-                <input type="text" class="form-control" name="Full Name" placeholder="doctor name">
+                <input type="text" class="form-control" name="full_name" placeholder="doctor name">
             </div>
 
             <!--Specialization-->
             <div class="mb-3">
                 <label class="form-label">Specialization</label> <br>
-                <input type="text" class="form-control" name="Department" placeholder="Department name">
+                <input type="text" class="form-control" name="specialization" placeholder="Department name">
             </div>
 
             <!--Email-->
@@ -32,10 +32,16 @@
                 <input type="email" class="form-control" name="email" placeholder="Email ID">
             </div>
 
+            <!--password-->
+            <div class="mb-3">
+                <label class="form-label">Password</label> <br>
+                <input type="password" class="form-control" name="password" required>
+            </div>
+
             <!--experience-->
             <div class="mb-3">
                 <label class="form-label">Experience</label> <br>
-                <input type="number" class="form-control" name="Experience" placeholder="eg:10">
+                <input type="number" class="form-control" name="experience" placeholder="eg:10">
             </div>
 
             <div class="text-center">

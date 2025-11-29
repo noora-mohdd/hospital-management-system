@@ -5,7 +5,7 @@ db=SQLAlchemy()
 def init_db(app):
 
     with app.app_context():
-        from backend.models import Patient
+        from backend.models import Patient, Doctor
 
         db.create_all() #create tables if not exist
 
@@ -25,5 +25,6 @@ def init_db(app):
             db.session.add(admin)
             db.session.commit()
             print("admin created")
+        
 
         print("database initialized successfully")
