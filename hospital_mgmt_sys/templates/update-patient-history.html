@@ -11,15 +11,29 @@
     
     <div class="card p-4 shadow" style="background-color: #e3fcf9; width: 1000px;">
 
+        {% with messages=get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissable fade show d-flex justify-content-between align-items-center">
+                        <span>{{ message }} </span> 
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+
+
         <h4 class="fw-bold">Update patient history</h4>
 
-        <!--patient basic details, link w jinja later from db-->
-        <p class="mt-2 mb-1"><strong>Patient name:</strong> Ms.beeboo</p>
-        <p class="mb-1"><strong>Doctor name:</strong> Dr. BADABOOM</p>
-        <p class="mb-1"><strong>Department:</strong> somethingsomthing</p>
+        
+        <p class="mt-2 mb-1"><strong>Patient name:</strong>{{ appointment.patient.full_name }} </p>
+        <p class="mb-1"><strong>Doctor name:</strong>{{ appointment.doctor.full_name }} </p>
+        <p class="mb-1"><strong>Department:</strong>{{ appointment.doctor.specialization }} </p>
 
         <!--form start-->
-        <form method="post" action="#">
+        <form method="post" action="{{ url_for('doctor.complete_appointment', appt_id=appointment.id) }}" method="POST">
 
             <div class="row mb-3 mt-4">
                 <div class="col">
@@ -40,7 +54,7 @@
             <div class="row">
                     <div class="col">
                     <label class="label-title">prescription</label>
-                    <input type="text" name="perscription" class="form-control" placeholder="enter perscription">
+                    <input type="text" name="prescription" class="form-control" placeholder="enter perscription">
                 </div>
                 <div class="col">
                     <label class="label-title">Medicine</label>
@@ -48,11 +62,10 @@
                 </div>
             </div>
 
+            <div class="text-end mt-3">
+                <button type="submit" class="btn btn-success">Save</button>
+            </div>
         </form>
-        <div class="text-end mt-3">
-            <button type="submit" class="btn btn-success">Save</button>
-        </div>
-
     </div>
 </body>
 </html>

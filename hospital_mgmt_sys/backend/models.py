@@ -42,10 +42,23 @@ class Appointment(db.Model):
 class History(db.Model):
     id=db.Column(db.Integer, primary_key=True)
     
-    appointment_id=db.Column(db.Integer, db.ForeignKey("appointment.id"), unique=True)
+    appointment_id=db.Column(db.Integer, db.ForeignKey("appointment.id"), unique=True, nullable=False)
 
     visit_type=db.Column(db.String(100))
     test_done=db.Column(db.String(100))
     diagnosis=db.Column(db.Text)
     prescription=db.Column(db.Text)
     medicine=db.Column(db.Text)
+
+    
+
+#availability table
+class Availability(db.Model):
+    id=db.Column(db.Integer, primary_key=True)
+    doctor_id=db.Column(db.Integer, db.ForeignKey('doctor.id'), nullable=False)
+
+    date=db.Column(db.String(20), nullable=False)
+    time=db.Column(db.String(10), nullable=False)
+    is_booked=db.Column(db.Boolean, default=False)
+
+    doctor=db.relationship('Doctor', backref=db.backref('availabilities', lazy=True))

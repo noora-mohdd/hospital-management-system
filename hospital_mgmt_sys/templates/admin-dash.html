@@ -7,9 +7,22 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body class="d-flex justify-content-center align-items-center vh-100">
+<body class="d-flex justify-content-center">
     
     <div class="card p-4 shadow" style="background-color: #e3fcf9; width: 1000px;">
+
+        {% with messages=get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissable fade show d-flex justify-content-between align-items-center">
+                        <span>{{ message }} </span> 
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
 
         <!--welcome admin part from wireframe-->
         <nav class="navbar px-0">
@@ -17,15 +30,24 @@
 
                 <a class="navbar-brand text-dark fw-bold">Welcome Admin</a>
 
-                <form class="d-flex" method="get" action="#"> <!--link here w jinja where data should be sent-->
-                    <input class="form-control me-2" type="search" placeholder="search doctor" aria-label="Search">
+                <form class="d-flex" method="get" action="{{ url_for('admin.search') }}"> 
+                    <input class="form-control me-2" name="q" type="search" placeholder="search doctors or patients">
                     <button class="btn btn-success" type="submit">Search</button>
                 </form>
 
             </div>
         </nav>
 
-        <!--reg doc from wireframe-->
+        <!--------number of docs, patients and upcoming appts------->
+        <div class="d-flex justify-content-around mt-3 mb-3">
+            <div><strong>Total Doctors:</strong> {{ total_doctors }}</div>
+            <div><strong>Total Patients:</strong> {{ total_patients }}</div>
+            <div><strong>Upcoming Appointments:</strong> {{ total_upcoming }}</div>
+        </div>
+
+
+
+        <!--------doctor list--------->
         <div class="d-flex align-items-center justify-content-between mt-4">
             <h5>Registered Doctors</h5>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -33,55 +55,75 @@
             </div>
         </div>
 
-        <!--registered doc list-->
+        
         <div class="card mt-3 p-2">
 
-            <!--doctor row-->
-            <!--connect thru jinja later so we dontn have to hardcode and can go thru the docs admin registered from db-->
+            {% for doc in doctors %}
             <div class="d-flex align-items-center justify-content-between mt-2" style="border: 2px solid black; border-radius: 6px; padding: 10px;">
-                <h6>Dr. BADABING</h6>
+                <h6>{{ doc.full_name }}</h6>
                 <div class="d-flex gap-2">
-                    <button type="button" class="btn btn-outline-warning" href="#">Edit</button>  <!--should take to edit form (similar to add doc form it is)-->
-                    <button type="button" class="btn btn-outline-danger">Delete</button>
-                    <button type="button" class="btn btn-outline-dark">Blacklist</button>
+                    <!--edit-->
+                    <a href="{{ url_for('admin.edit_doctor', id=doc.id) }}" class="btn btn-outline-warning">Edit</a> 
+                    <!--delete-->
+                    <form action="{{ url_for('admin.delete_doctor', id=doc.id)}}" method="POST" style="display: inline;">
+                        <button class="btn btn-outline-danger">Delete</button>
+                    </form>
+                    <!--blacklist-->
+                    <form action="{{ url_for('admin.blacklist_doctor', id=doc.id) }}" method="POST">
+                        {% if doc.is_blacklisted %}
+                            <button class="btn btn-warning">unblacklist</button>
+                        {% else %}
+                            <button class="btn btn-outline-dark">Blacklist</button>
+                        {% endif %}
+                    </form>       
                 </div>
             </div>
 
-            <div class="d-flex align-items-center justify-content-between mt-2" style="border: 2px solid black; border-radius: 6px; padding: 10px;">
-                <h6>Dr. BADABOOM</h6>
-                <div class="d-flex gap-2">
-                    <button type="button" class="btn btn-outline-warning" href="#">Edit</button>  <!--should take to edit form (similar to add doc form it is)-->
-                    <button type="button" class="btn btn-outline-danger">Delete</button>
-                    <button type="button" class="btn btn-outline-dark">Blacklist</button>
-                </div>
-            </div>
-
-            <!--end jinja here-->
+            {%else%}
+            <p class="text-muted text-center mt-2">no doctors yet</p>
+            {% endfor %}
         </div>
 
         
-        <!--registered patients ffrom wirefram-->
+        <!------------patient list----------->
         <div class="d-flex align-items-center justify-content-between mt-4">
             <h5>Registered Patients</h5>
         </div>
 
-        <!--registered patient list-->
+        
         <div class="card mt-3 p-2">
 
-            <!--patient row-->
-        <!--connect thru jinja later so we dontn have to hardcode and can go thru the docs admin registered from db-->
+            {% for p in patients %}
+            
             <div class="d-flex align-items-center justify-content-between mt-2" style="border: 2px solid black; border-radius: 6px; padding: 10px;">
-                <h6>Ms. DUMBFUKS</h6>
+
+                <h6>{{ p.full_name }} </h6>
+
                 <div class="d-flex gap-2">
-                    <button type="button" class="btn btn-outline-warning" href="#">Edit</button>  <!--patient edit form ig-->
-                    <button type="button" class="btn btn-outline-danger">Delete</button>
-                    <button type="button" class="btn btn-outline-dark">Blacklist</button>
+                    <!--edit-->
+                    <a href="{{ url_for('admin.edit_patient', id=p.id) }}" class="btn btn-outline-warning">Edit</a> 
+                    <!--delete-->
+                    <form action="{{ url_for('admin.delete_patient', id=p.id)}}" method="POST" style="display: inline;">
+                        <button class="btn btn-outline-danger">Delete</button>
+                    </form>
+                    <!--blacklist-->
+                    <form action="{{ url_for('admin.blacklist_patient', id=p.id) }}" method="POST">
+                        {% if p.is_blacklisted %}
+                            <button class="btn btn-warning">unblacklist</button>
+                        {% else %}
+                            <button class="btn btn-outline-dark">Blacklist</button>
+                        {% endif %}
+                    </form>       
+                    
                 </div>
             </div>
+            {%else%}
+            <p class="text-muted text-center mt-2">no patients yet</p>
+            {% endfor %}
 
         </div>
 
-        <!--upcoming appointments table-->
+        <!--------upcoming appointments table---------->
         <h5 class="mt-4">Upcoming Appointments</h5>
         <div class="table-responsive mt-4">
             <table class="table" style="border: 2px solid black; border-radius: 6px;">
@@ -91,21 +133,86 @@
                         <th>Patient Name</th>
                         <th>Doctor Name</th>
                         <th>Department</th>
-                        <th>Patient History</th>
+                        <th>Date</th>
+                        <th>Time</th>
                     </tr>
                 </thead>
-                <!--sample row until backend-->
+                
                 <tbody>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td><button type="button" class="btn btn-primary">View</button></td>
+                    {% if upcoming %}
+                        {% for appt in upcoming %}
+                        <tr>
+                            <td>{{ loop.index }} </td>
+                            <td>{{ appt.patient.full_name }} </td>
+                            <td>{{ appt.doctor.full_name }} </td>
+                            <td>{{ appt.doctor.specialization }} </td>
+                            <td>{{ appt.date }} </td>
+                            <td>{{ appt.time }} </td>
+                            
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="text-muted text-center mt-2">no appointments</td>
+                        </tr>
+                    {% endif %}
+            
                 </tbody>
             </table>
         </div>
 
-    
+        <!------past appointments table------>
+        <h5 class="mt-4">Past Appointments</h5>
+        <div class="table-responsive mt-3">
+            <table class="table" style="border: 2px solid black; border-radius: 6px;">
+                <thead>
+                    <tr>
+                        <th>Sr.No.</th>
+                        <th>Patient Name</th>
+                        <th>Doctor Name</th>
+                        <th>Department</th>
+                        <th>Status</th>
+                        <th>Patient History</th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    {% if past %}
+                        {% for appt in past %}
+                        <tr>
+                            <td>{{ loop.index }} </td>
+                            <td>{{ appt.patient.full_name }} </td>
+                            <td>{{ appt.doctor.full_name }} </td>
+                            <td>{{ appt.doctor.specialization }} </td>
+                            <td>
+                                {% if appt.status=="Completed" %}
+                                    <span class="text-success fw-bold">Completed</span>
+                                {% else %}
+                                    <span class="text-danger fw-bold">Cancelled</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if appt.status=="Completed" %}
+                                    <a class="btn btn-outline-primary btn-sm" href="{{ url_for('admin.view_appointment_history', appt_id=appt.id) }}">
+                                        View
+                                    </a> 
+                                {% else %}
+                                    <span class="text-muted">---</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="text-muted text-center mt-2">no appointments</td>
+                        </tr>
+                    {% endif %}
+            
+                </tbody>
+            </table>
+        </div>
+
+        <a href="{{ url_for('patient.logout') }}" class="btn btn-outline-danger">Logout</a>    
     </div>
 </body>
 </html>

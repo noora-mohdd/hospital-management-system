@@ -11,35 +11,66 @@
 <body class="d-flex justify-content-center align-items-center vh-100">
     
     <div class="card p-4 shadow" style="background-color: #e3fcf9; width: 1000px;">
+
+        {% with messages=get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissable fade show d-flex justify-content-between align-items-center">
+                        <span>{{ message }} </span> 
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+
+
         <h3 class="fw-bold mb-3">Doctor's availability</h3>
-        <h5>{{doctor.full_name}} ({{doctor.specialization}} yrs) </h5>
+        <h5>{{doctor.full_name}} ({{doctor.experience}} yrs) </h5>
         <div class="table-responsive mt-4">
             <table class="table" style="border: 2px solid black; border-radius: 6px;">
                 <thead>
                     <tr>
                         <th>Date</th>
-                        <th>Morning slot</th>
-                        <th>Evening slot</th>
+                        <th>timings</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for day in availability %}
-                    <tr>
-                        <td>{{ day.date }} </td>
+                    {% if grouped_slots %}
+                        {% for date, slots in grouped_slots.items() %}
+                            <tr>
+                                <td>{{ date }}</td>
 
-                        <td>{% if day.slots %}
-                                {% for slot in day.slots %}
-                                    <a href="{{ url_for('patient.book',doctor_id=doctor.id, date=day.date, time=slot)}}"
-                                    class="btn btn-outline-success m-1"> {{ slot }} </a>
-                                {% endfor %}
-                            {% else %}
-                                <button class="btn btn-outline-danger btn-lg">not available</button> 
-                            {% endif %}
-                        </td>
-                    </tr>
-                    {% endfor %}
+                                <td>
+                                    {% if slots %}
+                                        {% for s in slots %}
+                                            <form action="{{ url_for('patient.book', slot_id=s.id) }}"
+                                                  method="POST"
+                                                  style="display: inline;">
+                                                <button class="btn btn-outline-success m-1">
+                                                    {{ s.time }}
+                                                </button>
+                                            </form>
+                                        {% endfor %}
+                                    {% else %}
+                                        <button class="btn btn-outline-danger btn-sm">
+                                            Not available
+                                        </button>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="3" class="text-center text-muted fw-bold">
+                                No slots available to book
+                            </td>
+                        </tr>
+                    {% endif %}
                 </tbody>
             </table>
-                    
+        </div>     
+    </div>      
 </body>
 </html>
