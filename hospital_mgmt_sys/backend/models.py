@@ -25,7 +25,7 @@ class Doctor(db.Model):
     experience=db.Column(db.Integer)
     is_blacklisted=db.Column(db.Boolean, default=False)
 
-    appointments=db.relationship("Appointment", backref="doctor", lazy=True)
+    appointments=db.relationship("Appointment", backref="doctor", lazy=True, cascase="all, delete")
 
 #appointment table
 class Appointment(db.Model):
@@ -36,7 +36,7 @@ class Appointment(db.Model):
     time=db.Column(db.String(20))
     status=db.Column(db.String(20))
 
-    history=db.relationship("History", backref="appointment", uselist=False)
+    history=db.relationship("History", backref="appointment", uselist=False, cascase="all, delete")
 
 #history/treatment table
 class History(db.Model):

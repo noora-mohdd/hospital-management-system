@@ -326,6 +326,8 @@ def edit_doctor(id):
 @admin_bp.route("/doctor/<int:id>/delete", methods=["POST"])
 def delete_doctor(id):
     doctor=Doctor.query.get_or_404(id)
+    Availability.query.filter_by(doctor_id=id).delete()
+    Appointment.query.filter_by(doctor_id=id).delete()
     db.session.delete(doctor)
     db.session.commit()
     flash("doctor deleted", "success")
