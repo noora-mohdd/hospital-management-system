@@ -80,6 +80,7 @@ python app.py
 ```
 
 ## Project structure
+```bash
 hospital-mgmt-sys/
 │
 ├── backend/
@@ -94,6 +95,6 @@ hospital-mgmt-sys/
 ├── app.py
 ├── README.md
 ├── .gitignore
-
+```
 
 This project helped me understand full-stack web development concepts deeply and was awarded an S Grade for clean design, functionality, and implementation 😋
