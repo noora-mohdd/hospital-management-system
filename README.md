@@ -1,6 +1,6 @@
-# 🏥 Hospital Management System
+# Hospital Management System
 
-A role-based Hospital Management System built using **Flask**, **SQLAlchemy**, **SQLite**, **HTML**, **CSS**, and **Jinja2**.
+A role-based Hospital Management System built using **Flask**, **SQLAlchemy**, **SQLite**, **HTML**, **boostratp**, **CSS**, and **Jinja2**.
 
 This project allows admins, doctors, and patients to interact with the system through clearly defined roles and functionalities, simulating a real-world hospital workflow.
 
@@ -77,7 +77,9 @@ venv\Scripts\activate
 source venv/bin/activate
 pip install flask flask_sqlalchemy
 python app.py
+```
 
+## Project structure
 hospital-mgmt-sys/
 │
 ├── backend/
@@ -92,5 +94,6 @@ hospital-mgmt-sys/
 ├── app.py
 ├── README.md
 ├── .gitignore
+
 
 This project helped me understand full-stack web development concepts deeply and was awarded an S Grade for clean design, functionality, and implementation 😋
