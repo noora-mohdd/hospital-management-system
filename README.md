@@ -74,7 +74,6 @@ git clone <your-repo-url>
 cd hospital-mgmt-sys
 python -m venv venv
 venv\Scripts\activate
-source venv/bin/activate
 pip install flask flask_sqlalchemy
 python app.py
 ```
