@@ -98,5 +98,6 @@ hospital-mgmt-sys/
 ```
 
 This project helped me understand full-stack web development concepts deeply and was awarded an S Grade for clean design, functionality, and implementation 😋
+
 <img width="524" height="415" alt="image" src="https://github.com/user-attachments/assets/2436747b-7d3a-477c-9822-e1350cd15a79" />
 
